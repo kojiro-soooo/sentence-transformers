@@ -51,7 +51,8 @@ class LossEvaluator(SentenceEvaluator):
         self.loss_model.eval()
 
         loss_value = 0
-        self.loader.collate_fn = model.smart_batching_collate
+        self.loader.collate_fn = model.to('cuda').smart_batching_collate
+
         num_batches = len(self.loader)
         data_iterator = iter(self.loader)
 
