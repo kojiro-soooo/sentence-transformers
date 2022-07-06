@@ -79,7 +79,7 @@ class LossEvaluator(SentenceEvaluator):
                                         final_loss,
                                         epoch)
 
-        self.loss_model.zero_grad()
-        self.loss_model.train()
+        self.loss_model.zero_grad().to('cuda')
+        self.loss_model.train().to('cuda')
 
-        return final_loss
+        return final_loss.to('cuda')
