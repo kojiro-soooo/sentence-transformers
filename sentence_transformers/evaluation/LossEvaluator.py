@@ -46,9 +46,7 @@ class LossEvaluator(SentenceEvaluator):
 
         self.csv_file = "loss_evaluation" + ("_" + name if name else '') + "_results.csv"
         self.csv_headers = ["epoch", "steps", "loss"]
-        device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-        model.to(device)
-
+        
     def __call__(self, model, output_path: str = None, epoch: int = -1, steps: int = -1) -> float:
 
         self.loss_model.eval().to('cuda')
