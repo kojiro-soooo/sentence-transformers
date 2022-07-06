@@ -704,11 +704,11 @@ class SentenceTransformer(nn.Sequential):
                     data_iterator = data_iterators[train_idx]
 
                     try:
-                        data = next(data_iterator)
+                        data = next(data_iterator.to('cuda'))
                     except StopIteration:
                         data_iterator = iter(dataloaders[train_idx])
                         data_iterators[train_idx] = data_iterator
-                        data = next(data_iterator)
+                        data = next(data_iterator.to('cuda'))
 
                     features, labels = data
                     labels = labels.to(self._target_device)
