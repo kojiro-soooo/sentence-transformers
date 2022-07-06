@@ -59,7 +59,7 @@ class LossEvaluator(SentenceEvaluator):
         with torch.no_grad():
             for _ in trange(num_batches, desc="Iteration", smoothing=0.05, disable=not self.show_progress_bar):
                 sentence_features, labels = next(data_iterator)
-                loss_value += self.loss_model(sentence_features, labels).item()
+                loss_value += self.loss_model(sentence_features, labels).to('cuda').item()
 
         final_loss = loss_value / num_batches
         if output_path is not None and self.write_csv:
