@@ -693,8 +693,8 @@ class SentenceTransformer(nn.Sequential):
             training_steps = 0
 
             for loss_model in loss_models:
-                loss_model.zero_grad()
-                loss_model.train()
+                loss_model.zero_grad().to('cuda')
+                loss_model.train().to('cuda')
 
             for _ in trange(steps_per_epoch, desc="Iteration", smoothing=0.05, disable=not show_progress_bar):
                 for train_idx in range(num_train_objectives):
@@ -704,11 +704,11 @@ class SentenceTransformer(nn.Sequential):
                     data_iterator = data_iterators[train_idx]
 
                     try:
-                        data = next(data_iterator.to('cuda'))
+                        data = next(data_iterator)
                     except StopIteration:
                         data_iterator = iter(dataloaders[train_idx])
                         data_iterators[train_idx] = data_iterator
-                        data = next(data_iterator.to('cuda'))
+                        data = next(data_iterator)
 
                     features, labels = data
                     labels = labels.to(self._target_device)
