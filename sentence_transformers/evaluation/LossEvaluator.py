@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class LossEvaluator(SentenceEvaluator):
+    torch.set_default_tensor_type('torch.cuda.FloatTensor')
 
     def __init__(self, loader, loss_model: nn.Module = None, name: str = '', log_dir: str = None,
                  show_progress_bar: bool = False, write_csv: bool = True):
@@ -86,6 +87,6 @@ class LossEvaluator(SentenceEvaluator):
 
         device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         model.to(device)
-        
+
         return final_loss.to('cuda')
         
