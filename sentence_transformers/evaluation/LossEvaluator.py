@@ -84,4 +84,8 @@ class LossEvaluator(SentenceEvaluator):
         self.loss_model.zero_grad().to('cuda')
         self.loss_model.train().to('cuda')
 
+        device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        model.to(device)
+        
         return final_loss.to('cuda')
+        
