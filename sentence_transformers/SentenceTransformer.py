@@ -693,7 +693,7 @@ class SentenceTransformer(nn.Sequential):
             training_steps = 0
 
             for loss_model in loss_models:
-                loss_model.zero_grad().to('cuda')
+                loss_model.zero_grad()
                 loss_model.train().to('cuda')
 
             for _ in trange(steps_per_epoch, desc="Iteration", smoothing=0.05, disable=not show_progress_bar):
