@@ -43,7 +43,7 @@ class SentenceTransformer(nn.Sequential):
     """
     def __init__(self, model_name_or_path: Optional[str] = None,
                  modules: Optional[Iterable[nn.Module]] = None,
-                 device: 'cuda', #Optional[str] = None,
+                 device: Optional[str] = None,
                  cache_folder: Optional[str] = None,
                  use_auth_token: Union[bool, str, None] = None
                  ):
