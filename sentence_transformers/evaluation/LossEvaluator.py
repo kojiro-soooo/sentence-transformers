@@ -48,7 +48,7 @@ class LossEvaluator(SentenceEvaluator):
 
     def __call__(self, model, output_path: str = None, epoch: int = -1, steps: int = -1) -> float:
 
-        self.loss_model.eval()
+        self.loss_model.eval().to('cuda')
 
         loss_value = 0
         self.loader.collate_fn = model.to('cuda').smart_batching_collate
@@ -58,8 +58,8 @@ class LossEvaluator(SentenceEvaluator):
 
         with torch.no_grad():
             for _ in trange(num_batches, desc="Iteration", smoothing=0.05, disable=not self.show_progress_bar):
-                sentence_features, labels = next(data_iterator).to('cuda')
-                loss_value += self.loss_model(sentence_features, labels).item().to('cuda')
+                sentence_features, labels = next(data_iterator)
+                loss_value += self.loss_model(sentence_features, labels).item()
 
         final_loss = loss_value / num_batches
         if output_path is not None and self.write_csv:
